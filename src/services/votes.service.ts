@@ -1,4 +1,5 @@
 import { sequelize, Vote, Idea } from '../models';
+import { getSocketIO } from '../socket';
 
 export class VotesService {
   async voteForIdea(ideaId: number, clientIp: string): Promise<void> {
@@ -33,6 +34,21 @@ export class VotesService {
         { transaction: t }
       );
     });
+
+    const newVoteCount = await Vote.count({
+      where: { ideaId },
+    });
+
+    try {
+      const io = getSocketIO();
+      io.emit('vote_update', {
+        ideaId,
+        newVoteCount,
+      });
+      console.log(`✓ Emitted vote_update for idea ${ideaId}, new count: ${newVoteCount}`);
+    } catch (error) {
+      console.error('Warning: Failed to emit socket event:', error);
+    }
   }
 }
 
