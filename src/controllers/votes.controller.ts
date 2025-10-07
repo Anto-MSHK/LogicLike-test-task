@@ -12,7 +12,7 @@ export class VotesController {
         return;
       }
 
-      const clientIp = getClientIp(req);
+      const clientIp = await getClientIp(req);
       
       await votesService.voteForIdea(ideaId, clientIp);
       

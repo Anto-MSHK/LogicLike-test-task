@@ -25,7 +25,7 @@ export class IdeasService {
           attributes: [],
         },
       ],
-      group: ['Idea.id'],
+      group: ['IdeaModel.id', 'IdeaModel.title', 'IdeaModel.description'],
       order: [[Sequelize.literal('"votesCount"'), 'DESC']],
       raw: true,
       subQuery: false,

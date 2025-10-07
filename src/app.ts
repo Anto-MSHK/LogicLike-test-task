@@ -1,8 +1,10 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import routes from './routes';
 
 const app: Express = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,9 +14,6 @@ app.get('/', (_req: Request, res: Response) => {
   res.json({
     message: 'Welcome to Voting System API',
     version: '1.0.0',
-    endpoints: {
-      health: '/api/health',
-    },
   });
 });
 

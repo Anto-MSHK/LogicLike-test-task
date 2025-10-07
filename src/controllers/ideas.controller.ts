@@ -5,7 +5,7 @@ import { getClientIp } from '../utils/getClientIp';
 export class IdeasController {
   async getIdeas(req: Request, res: Response): Promise<void> {
     try {
-      const clientIp = getClientIp(req);
+      const clientIp = await getClientIp(req);
       const ideas = await ideasService.getIdeasWithVotes(clientIp);
       
       res.json(ideas);
